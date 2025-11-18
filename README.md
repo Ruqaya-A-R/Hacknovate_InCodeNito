@@ -18,6 +18,6 @@
 ✔ Clean formatted output  
 
 ### Future improvements
-- Frontend UI / Mobile App  
+- Frontend UI / Website 
 - Better NLP matching for sloppy handwriting  
 - Medicine refill reminders  
