@@ -1,75 +1,194 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mediscan Profile</title>
-    <link rel="stylesheet" href="profile.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mediscan — Profile</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-neon">MS</div>
+        <h1>Mediscan</h1>
+      </div>
 
-    <!-- Header -->
-    <header>
-        <h2>My Profile</h2>
-        <nav>
-            <a href="/uploads">Uploads</a>
-            <a href="/help">Help</a>
-        </nav>
-    </header>
+      <nav class="nav">
+        <a href="/uploads">Uploads</a>
+        <a href="/help">Help</a>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Profile Section -->
+  <main class="app-container">
+
+    <!-- PROFILE CARD -->
     <section class="profile-card">
+      <div class="profile-avatar" aria-hidden="true"></div>
+
+      <div class="profile-meta">
         <h3>Profile Name</h3>
-        <input type="text" placeholder="Enter your name">
+        <p>Update your display name and contact details</p>
+        <div style="margin-top:8px;">
+          <input type="text" placeholder="Enter your name">
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <button class="save-btn">Save</button>
+      </div>
     </section>
 
-    <!-- Medicine List -->
-    <section class="medicine-box">
-        <h2>Medicine List</h2>
 
+    <!-- MEDICINE LIST -->
+    <section>
+      <h2 style="color:#0f172a;margin-bottom:12px;">Medicine List</h2>
+
+      <div class="medicine-grid" id="medicine-grid"></div>
     </section>
+
+  </main>
+
+
+  <!-- JS SCRIPT -->
+  <script>
+    const medicines = [
+      { name: "Cetirizine", dosage: "10 mg tablet", timings: "Anytime (preferably night)", warnings: "May cause drowsiness; avoid driving", allergies: "Headache, dry mouth, dizziness", diet: "No restrictions", purpose: "Allergy relief (sneezing, runny nose, itching, hives)" },
+
+      { 
+  name: "Paracetamol", 
+  dosage: "500 mg tablet, 1–2 tablets every 6 hours", 
+  timings: "After food, as needed", 
+  warnings: "Do not exceed 4 g per day; avoid in severe liver disease", 
+  allergies: "Nausea, allergic reaction (rare)", 
+  diet: "Avoid oily food", 
+  purpose: "Pain relief and fever reduction" 
+},
+
+{ name: "Ibuprofen", dosage: "200–400 mg", timings: "Every 6–8 hours, after food", warnings: "Do not exceed daily limit; avoid in ulcers/kidney disease/pregnancy", allergies: "Stomach upset, rash, dizziness", diet: "Avoid alcohol, acidic foods", purpose: "Pain relief, inflammation, fever" },
+
+{ name: "Azithromycin", dosage: "500 mg once daily (3 days)", timings: "1 hour before or 2 hours after food", warnings: "Complete full course; avoid unnecessary use", allergies: "Stomach upset, rash", diet: "Avoid heavy meals", purpose: "Bacterial infections (respiratory, throat)" },
+
+{ name: "Diclofenac", dosage: "50 mg, 2–3 times daily", timings: "After food", warnings: "Avoid in ulcers, kidney issues, pregnancy", allergies: "Stomach pain, rash", diet: "Avoid alcohol", purpose: "Pain and inflammation" },
+
+{ name: "Amoxicillin", dosage: "500 mg, 3 times daily", timings: "Before or after food (keep timing consistent)", warnings: "Finish full course; avoid if allergic to penicillin", allergies: "Rash, itching, swelling, breathing issues", diet: "Avoid oily/heavy meals, hydrate well", purpose: "Bacterial infections" },
+
+{ name: "Ranitidine", dosage: "150 mg twice daily", timings: "Before meals", warnings: "Use limited; alternatives preferred", allergies: "Headache, fatigue", diet: "Avoid acidic foods", purpose: "Acidity, gastric irritation" },
+
+{ name: "Pantoprazole", dosage: "40 mg once daily", timings: "30 min before breakfast", warnings: "Avoid long-term use", allergies: "Headache, nausea", diet: "Avoid spicy/oily foods", purpose: "Acidity, GERD" },
+
+{ name: "Amoxicillin-Clavulanic Acid", dosage: "625 mg twice daily", timings: "After food", warnings: "May cause stomach upset; avoid if penicillin allergy", allergies: "Rash, swelling, itching", diet: "Take with food", purpose: "Broad-spectrum antibiotic" },
+
+{ name: "Glimepiride", dosage: "1–2 mg once daily", timings: "Before breakfast", warnings: "May cause low blood sugar", allergies: "Skin rash", diet: "Eat meals on time", purpose: "Diabetes management" },
+
+{ name: "Metformin", dosage: "500 mg twice daily", timings: "With meals", warnings: "Avoid in severe kidney issues", allergies: "Nausea, bloating", diet: "Avoid sugary foods", purpose: "Blood sugar control" },
+
+{ name: "ORS", dosage: "1 packet in 1L water", timings: "Anytime as needed", warnings: "Do not mix with milk or juice", allergies: "None", diet: "Light meals", purpose: "Rehydration" },
+
+{ name: "Losartan", dosage: "50 mg once daily", timings: "Anytime", warnings: "Avoid in pregnancy", allergies: "Dizziness", diet: "Low sodium diet", purpose: "Hypertension" },
+
+{ name: "Telmisartan", dosage: "40 mg once daily", timings: "Anytime", warnings: "Avoid in pregnancy", allergies: "Dizziness", diet: "Low-salt diet", purpose: "High blood pressure" },
+
+{ name: "Amlodipine", dosage: "5 mg once daily", timings: "Anytime", warnings: "May cause swelling of feet", allergies: "Dizziness, flushing", diet: "Avoid salty foods", purpose: "Blood pressure control" },
+
+{ name: "Domperidone", dosage: "10 mg, 2–3 times daily", timings: "30 mins before food", warnings: "Avoid in heart rhythm disorders", allergies: "Dry mouth", diet: "Avoid heavy meals", purpose: "Vomiting, indigestion" },
+
+{ name: "Levocetirizine", dosage: "5 mg once daily", timings: "Night", warnings: "May cause mild drowsiness", allergies: "Headache, dry mouth", diet: "No restrictions", purpose: "Allergy relief" },
+
+{ name: "Montelukast", dosage: "10 mg once daily", timings: "Night", warnings: "May cause mood changes (rare)", allergies: "Headache", diet: "No restrictions", purpose: "Allergic rhinitis, asthma" },
+
+{ name: "Dolo 650", dosage: "650 mg", timings: "Every 6 hours", warnings: "Max 4 g/day", allergies: "Nausea", diet: "Avoid alcohol", purpose: "Fever, pain" },
+
+{ name: "Cetapin SR", dosage: "500 mg once daily", timings: "With dinner", warnings: "Avoid in severe kidney disease", allergies: "Bloating, nausea", diet: "Low sugar", purpose: "Diabetes" },
+
+{ name: "Dicyclomine", dosage: "10–20 mg twice daily", timings: "Before food", warnings: "Avoid in glaucoma", allergies: "Dry mouth", diet: "Avoid spicy foods", purpose: "Abdominal cramps" },
+
+{ name: "Ondansetron", dosage: "4 mg every 8 hours", timings: "Before or after food", warnings: "May cause constipation", allergies: "Headache", diet: "Light meals", purpose: "Nausea, vomiting" },
+
+{ name: "Norfloxacin", dosage: "400 mg twice daily", timings: "Before food", warnings: "Avoid in pregnancy", allergies: "Nausea", diet: "Avoid milk around dose", purpose: "UTI treatment" },
+
+{ name: "Levofloxacin", dosage: "500 mg once daily", timings: "Before or after food", warnings: "Avoid in pregnancy; may cause tendon pain", allergies: "Nausea, dizziness", diet: "Avoid milk with dose", purpose: "Respiratory and urinary infections" },
+
+{ name: "Metronidazole", dosage: "400 mg thrice daily", timings: "After food", warnings: "Avoid alcohol strictly", allergies: "Metallic taste, nausea", diet: "Avoid alcohol", purpose: "Loose motions, stomach infections" },
+
+{ name: "Cefixime", dosage: "200 mg twice daily", timings: "After food", warnings: "Complete full course; avoid if allergic to cephalosporins", allergies: "Rash, stomach upset", diet: "Take with food", purpose: "Bacterial infections (throat, sinus, urinary)" },
+
+{ name: "Calcium + Vitamin D3", dosage: "500 mg once daily", timings: "After lunch", warnings: "Avoid in kidney stones", allergies: "Constipation (rare)", diet: "Avoid oxalate-rich foods", purpose: "Bone strength" },
+
+{ name: "Vitamin C", dosage: "500 mg once or twice daily", timings: "After food", warnings: "High doses may cause acidity", allergies: "None common", diet: "Avoid citrus if acidic", purpose: "Immunity support" },
+
+{ name: "Zincovit", dosage: "One tablet daily", timings: "After food", warnings: "Avoid overdosing", allergies: "Nausea (rare)", diet: "Light meals", purpose: "Multivitamin supplement" },
+
+{ name: "B-Complex", dosage: "One tablet once daily", timings: "After food", warnings: "Safe for most people", allergies: "Rare rash", diet: "No restrictions", purpose: "Vitamin B deficiency, weakness" },
+
+{ name: "Salbutamol Inhaler", dosage: "1–2 puffs as needed", timings: "As required", warnings: "Overuse may cause shakiness", allergies: "Tremors (mild)", diet: "No restrictions", purpose: "Asthma / wheezing relief" },
+
+{ name: "Fexofenadine", dosage: "120–180 mg once daily", timings: "Anytime", warnings: "Avoid with fruit juice", allergies: "Headache", diet: "Avoid apple/orange juice", purpose: "Allergy relief" },
+
+{ name: "Probiotic", dosage: "1–2 sachets daily", timings: "After food", warnings: "Safe for most people", allergies: "None common", diet: "Light meals", purpose: "Restore gut bacteria during diarrhea" },
+
+{ name: "Benzonatate", dosage: "100 mg 2–3 times daily", timings: "After food", warnings: "Do not bite or chew", allergies: "Drowsiness", diet: "No restrictions", purpose: "Cough suppression" },
+
+{ name: "Betadine Gargle", dosage: "Use 1–2 times daily", timings: "After meals", warnings: "Avoid if iodine allergy", allergies: "Irritation (rare)", diet: "Avoid spicy foods", purpose: "Throat infection" },
+
+{ name: "Budesonide Inhaler", dosage: "1–2 puffs twice daily", timings: "Morning and night", warnings: "Rinse mouth after use", allergies: "Thrush (rare)", diet: "No restrictions", purpose: "Asthma control" },
+
+{ name: "Cetirizine Syrup", dosage: "5 ml once daily", timings: "Night", warnings: "May cause sleepiness", allergies: "Dry mouth", diet: "No restrictions", purpose: "Allergy relief" },
+
+{ name: "Ambroxol Syrup", dosage: "10 ml twice daily", timings: "After food", warnings: "Drink water to loosen mucus", allergies: "Stomach upset", diet: "Hydrate well", purpose: "Productive cough" },
+
+{ name: "Dextromethorphan Syrup", dosage: "10 ml every 6 hours", timings: "After food", warnings: "May cause sleepiness", allergies: "Dizziness", diet: "Avoid alcohol", purpose: "Dry cough" },
+
+{ name: "Hyoscine Butylbromide", dosage: "10 mg 3 times daily", timings: "Before food", warnings: "Avoid in glaucoma", allergies: "Dry mouth", diet: "Avoid heavy meals", purpose: "Abdominal cramps" },
+
+{ name: "Esomeprazole", dosage: "20–40 mg once daily", timings: "Before breakfast", warnings: "Avoid long-term use", allergies: "Bloating", diet: "Avoid spicy food", purpose: "GERD and acidity" },
+
+{ name: "Rabeprazole", dosage: "20 mg once daily", timings: "Before breakfast", warnings: "Avoid long-term use", allergies: "Headache", diet: "Avoid citrus", purpose: "Acidity, GERD" },
+
+{ name: "Sucralfate", dosage: "10 ml 4 times daily", timings: "Before meals", warnings: "Maintain gap from other meds", allergies: "Constipation", diet: "Avoid spicy food", purpose: "Ulcer and acidity protection" },
+
+{ name: "Loperamide", dosage: "2 mg after each loose stool", timings: "Anytime", warnings: "Not for bloody diarrhea", allergies: "Constipation", diet: "Light meals", purpose: "Diarrhea control" },
+
+{ name: "Naproxen", dosage: "250–500 mg twice daily", timings: "After meals", warnings: "Avoid in gastric ulcers", allergies: "Nausea, rash", diet: "Avoid alcohol", purpose: "Pain and inflammation" },
+
+{ name: "Ibuprofen + Paracetamol", dosage: "1 tablet every 8 hours", timings: "After food", warnings: "Avoid in ulcers", allergies: "Nausea", diet: "Avoid alcohol", purpose: "Pain and fever" },
+
+{ name: "Hydroxyzine", dosage: "10–25 mg at night", timings: "Night only", warnings: "May cause drowsiness", allergies: "Dry mouth", diet: "Avoid alcohol", purpose: "Anxiety, sleep, allergies" },
+
+{ name: "Mupirocin Ointment", dosage: "Apply 2–3 times daily", timings: "As needed", warnings: "Avoid eyes and mouth", allergies: "Local irritation", diet: "No restrictions", purpose: "Skin bacterial infections" },
+
+{ name: "Clotrimazole Cream", dosage: "Apply twice daily", timings: "Morning and night", warnings: "Avoid overuse", allergies: "Burning sensation", diet: "No restrictions", purpose: "Fungal infections" },
+
+{ name: "Ciprofloxacin", dosage: "500 mg twice daily", timings: "2 hours after food", warnings: "Avoid in pregnancy; can cause tendon pain", allergies: "Rash, nausea", diet: "Avoid milk with dose", purpose: "Bacterial infections" },
+  
+    ];
+
+    const grid = document.getElementById('medicine-grid');
+
+    medicines.forEach(med => {
+      const el = document.createElement('article');
+      el.className = 'medicine-item';
+
+      el.innerHTML = `
+        <h3>${med.name}</h3>
+
+        <p>
+          <span class="pill">${med.dosage}</span>
+          <span class="pill">${med.timings}</span>
+        </p>
+
+        <p><strong>Purpose:</strong> ${med.purpose}</p>
+        <p><strong>Warnings:</strong> ${med.warnings}</p>
+
+        <p><strong>Allergies:</strong> ${med.allergies}</p>
+        <p><strong>Diet:</strong> ${med.diet}</p>
+      `;
+
+      grid.appendChild(el);
+    });
+  </script>
 
 </body>
 </html>
-<script>
-const medicines = [
-  { name: "Paracetamol", dosage: "1 tablet", timings: "Morning + Night", warnings: "Avoid empty stomach", allergies: "No allergies", diet: "Avoid oily food", purpose: "Pain relief" },
-  { name: "Ibuprofen", dosage: "1 tablet", timings: "Evening", warnings: "Take with food", allergies: "No allergies", diet: "Avoid alcohol", purpose: "Inflammation" },
-    {name: "Cetirizine",
-    dosage: "1 tablet",
-    timings: "Night",
-    warnings: "Causes drowsiness",
-    allergies: "No allergies",
-    diet: "Normal diet",
-    purpose: "Allergy relief"
-  },
-  {
-    name: "Amoxicillin",
-    dosage: "1 capsule",
-    timings: "Morning + Evening",
-    warnings: "Finish full course",
-    allergies: "Penicillin allergy",
-    diet: "Avoid milk",
-    purpose: "Antibiotic"
-  }
-];
-
-
-const container = document.querySelector('.medicine-box');
-
-medicines.forEach(med => {
-  const div = document.createElement('div');
-  div.classList.add('medicine-item');
-  div.innerHTML = `
-    <h3>${med.name}</h3>
-    <p><strong>Dosage:</strong> ${med.dosage}</p>
-    <p><strong>Timings:</strong> ${med.timings}</p>
-    <p><strong>Warnings:</strong> ${med.warnings}</p>
-    <p><strong>Allergies:</strong> ${med.allergies}</p>
-    <p><strong>Diet:</strong> ${med.diet}</p>
-    <p><strong>Purpose:</strong> ${med.purpose}</p>
-  `;
-  container.appendChild(div);
-});
-</script>

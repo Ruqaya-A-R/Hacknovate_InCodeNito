@@ -1,44 +1,319 @@
-/* Apply font and page background */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* ============================
+   Mediscan — Advanced UI Styles
+   Drop this into /public/styles.css
+   Compatible with your current HTML
+   ============================ */
+
+/* --- Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@400;600;700&display=swap');
+
+:root{
+  /* Core palette (light mode) */
+  --bg-1: #f6f9ff;
+  --bg-2: rgba(240,246,255,0.8);
+  --glass: rgba(255,255,255,0.55);
+  --muted: #6b7280;
+  --text: #071023;
+
+  /* Neon accents */
+  --accent-1: #7c3aed; /* purple */
+  --accent-2: #06b6d4; /* aqua */
+  --accent-3: #fb923c; /* orange */
+  --accent-4: #06d6a0; /* mint */
+
+  --card-radius: 14px;
+  --card-elev: 0 12px 30px rgba(7,16,35,0.08);
+  --glass-border: rgba(255,255,255,0.6);
 }
 
-/* Login box container */
-.login-box {
-    background: #ffffff;
-    padding: 35px;
-    border-radius: 12px;
-    width: 330px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    animation: fadeIn 0.6s ease-in-out;
+/* dark theme variables (prefers or .dark) */
+@media (prefers-color-scheme: dark) {
+  :root{
+    --bg-1: linear-gradient(180deg,#0b1020 0%, #071022 60%);
+    --bg-2: rgba(10,12,20,0.5);
+    --glass: rgba(10,12,20,0.45);
+    --muted: #94a3b8;
+    --text: #e6eef8;
+    --card-elev: 0 8px 22px rgba(2,6,23,0.6);
+    --glass-border: rgba(255,255,255,0.03);
+  }
 }
 
-/* Heading style */
-.login-box h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 25px;
+/* also allow toggling via class "dark" on body */
+body.dark { --bg-1: linear-gradient(180deg,#06060a 0%, #071022 60%); --text: #e6eef8; --glass: rgba(6,6,10,0.45); --muted:#9fb3cc; }
+
+/* --- Page base & animated background --- */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, Poppins, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background: radial-gradient(1200px 400px at 10% 10%, rgba(124,58,237,0.12), transparent 6%),
+              radial-gradient(1000px 350px at 90% 90%, rgba(6,182,212,0.08), transparent 7%),
+              var(--bg-1);
+  min-height:100vh;
+  position:relative;
+  overflow-x:hidden;
 }
 
-/* Text fields */
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 15px;
-    transition: 0.3s;
+/* subtle floating animated shapes (pure CSS) */
+body::before, body::after{
+  content:'';
+  position:fixed;
+  inset:auto -10% -30% auto;
+  width:560px;height:560px;
+  background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+  filter:blur(60px) saturate(140%);
+  opacity:0.14;
+  z-index:0;
+  transform:rotate(15deg);
+  animation: drift 18s linear infinite;
+  border-radius:40%;
+  pointer-events:none;
+}
+body::after{
+  right:-8%;
+  top:-12%;
+  width:420px;height:420px;
+  background:linear-gradient(120deg,var(--accent-3),var(--accent-4));
+  opacity:0.12;
+  animation-duration:22s;
+  transform:rotate(-10deg);
 }
 
-input:focus {
-    border-color: #4facfe;
-    outline: none;
-    box-shadow: 0;}
+@keyframes drift {
+  0%{transform:translateY(0) rotate(0);}
+  50%{transform:translateY(-18px) rotate(6deg);}
+  100%{transform:translateY(0) rotate(0);}
+}
+
+/* page container used by main.html */
+.app-container{
+  position:relative;
+  z-index:2; /* above animated bg */
+  width:95%;
+  max-width:1200px;
+  margin:28px auto;
+  padding:10px 16px 60px 16px;
+}
+
+/* --- Header (glass + neon) --- */
+.site-header{
+  position:sticky;
+  top:12px;
+  z-index:30;
+  margin:12px auto;
+  max-width:1200px;
+  backdrop-filter: blur(6px) saturate(120%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border-radius:18px;
+  border:1px solid var(--glass-border);
+  box-shadow: 0 8px 30px rgba(6,8,20,0.06);
+}
+
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 20px;
+}
+
+.brand{display:flex;align-items:center;gap:12px}
+.logo-dot{
+  width:42px;height:42px;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+  box-shadow:0 6px 22px rgba(124,58,237,0.18), inset 0 -3px 6px rgba(255,255,255,0.05);
+  display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+  font-size:18px;
+}
+.brand h1{font-size:20px;font-weight:700;color:var(--text)}
+
+/* nav */
+.nav{display:flex;gap:18px;align-items:center}
+.nav a{
+  color:var(--text);
+  text-decoration:none;font-weight:600;padding:8px 12px;border-radius:10px;transition:0.18s;
+}
+.nav a:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(6,8,20,0.06)}
+/* add tiny icon before nav links (emoji-based for no external libs) */
+.nav a::before{content:"⚕";margin-right:8px;opacity:0.9;font-size:14px}
+
+/* --- Profile Card (glass + floating) --- */
+.profile-card{
+  display:flex;align-items:center;gap:18px;padding:20px;border-radius:var(--card-radius);
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.30));
+  border:1px solid var(--glass-border);
+  box-shadow:var(--card-elev);
+  backdrop-filter: blur(8px) saturate(120%);
+  transform:translateZ(0);
+  animation: floatCard 6s infinite ease-in-out;
+}
+@keyframes floatCard{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+  100%{transform:translateY(0)}
+}
+
+.profile-avatar{
+  width:84px;height:84px;border-radius:18px;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-4));
+  box-shadow: 0 12px 30px rgba(6,182,212,0.12), inset 0 -6px 12px rgba(255,255,255,0.06);
+}
+
+/* meta */
+.profile-meta h3{font-size:18px;margin:0;color:var(--text);font-weight:700}
+.profile-meta p{margin:6px 0;color:var(--muted);font-size:13px}
+.profile-meta input{
+  margin-top:8px;padding:10px 12px;border-radius:10px;border:1px solid rgba(10,12,20,0.06);width:280px;background:rgba(255,255,255,0.6)
+}
+.profile-actions{margin-left:auto}
+.save-btn{
+  display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,var(--accent-1),var(--accent-4));
+  border:none;color:white;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(124,58,237,0.18);
+  transition:transform .16s, box-shadow .16s;
+}
+.save-btn:hover{transform:translateY(-4px);box-shadow:0 18px 45px rgba(124,58,237,0.22)}
+/* save icon */
+.save-btn::before{content:"💾";font-size:16px;display:inline-block}
+
+/* --- Section heading --- */
+main h2{font-size:20px;margin:18px 6px;color:var(--text)}
+
+/* --- Medicine grid --- */
+.medicine-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap:18px;margin-top:8px;
+  align-items:start;
+}
+
+/* medicine card: glass with neon accent line */
+.medicine-item{
+  background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.35));
+  border-radius:14px;padding:16px;border:1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(6,8,20,0.06);
+  position:relative;overflow:hidden;
+  transition:transform .18s, box-shadow .18s;
+  backdrop-filter: blur(6px) saturate(120%);
+}
+.medicine-item:hover{transform:translateY(-8px);box-shadow:0 26px 60px rgba(6,8,20,0.12)}
+
+/* neon accent bar on left */
+.medicine-item::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
+  background:linear-gradient(180deg,var(--accent-1),var(--accent-2));
+  box-shadow:0 6px 18px rgba(124,58,237,0.12);
+  border-top-left-radius:10px;border-bottom-left-radius:10px;
+}
+
+/* header inside card */
+.medicine-item h3{margin:0 0 8px 0;font-size:18px;color:var(--accent-1);font-weight:700}
+
+/* pill tags */
+.pill{
+  display:inline-block;padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px;margin-right:8px;
+  background:linear-gradient(90deg, rgba(124,58,237,0.12), rgba(6,182,212,0.06));
+  color:var(--text);
+  box-shadow:inset 0 -3px 6px rgba(0,0,0,0.02);
+}
+
+/* content lines */
+.medicine-item p{margin:7px 0;color:var(--text);font-size:14px}
+.medicine-item p small{color:var(--muted);font-size:12px}
+
+/* highlight labels like Purpose & Warnings & Allergies & Diet */
+.medicine-item p strong{
+  display:inline-block;
+  min-width:92px;
+  font-weight:700;
+  color:var(--accent-2);
+}
+
+/* ensure Allergies and Diet on separate lines and highlighted */
+.medicine-item .meta-line{display:block;padding:8px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));margin-top:6px;border:1px solid rgba(255,255,255,0.02)}
+/* you can wrap these lines in JS, but the current template already uses two <p> lines so they will show separately */
+
+/* --- LOGIN styles (glass + neon + floating center) --- */
+.center-screen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:36px;z-index:2;position:relative;
+}
+.login-card{
+  width:360px;padding:28px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.32));
+  border:1px solid var(--glass-border);box-shadow:0 18px 40px rgba(6,8,20,0.08);backdrop-filter: blur(8px);
+  animation: popIn .45s cubic-bezier(.2,.9,.3,1);
+}
+@keyframes popIn{from{transform:translateY(18px) scale(.995);opacity:0}to{transform:none;opacity:1}}
+.login-brand{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.login-title{font-size:20px;font-weight:700;color:var(--text)}
+.login-sub{font-size:13px;color:var(--muted)}
+.form-field{margin-top:12px}
+.form-field input{
+  width:100%;padding:12px;border-radius:12px;border:1px solid rgba(10,12,20,0.06);background:rgba(255,255,255,0.6);outline:none;font-size:14px;
+  transition:box-shadow .14s, transform .14s;
+}
+.form-field input:focus{box-shadow:0 8px 26px rgba(6,182,212,0.08);transform:translateY(-1px);border-color:rgba(6,182,212,0.24)}
+.btn{
+  margin-top:12px;padding:12px 14px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;font-weight:700;cursor:pointer;
+  box-shadow:0 10px 30px rgba(6,182,212,0.14);transition:transform .14s, box-shadow .14s;
+}
+.btn:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(6,182,212,0.2)}
+.small-link{display:block;text-align:center;margin-top:12px;color:var(--muted);text-decoration:none}
+
+/* --- Responsive tweaks --- */
+@media (max-width:860px){
+  .profile-meta input{width:200px}
+  .app-container{padding-left:12px;padding-right:12px}
+  .logo-dot{width:38px;height:38px}
+}
+@media (max-width:520px){
+  .medicine-grid{grid-template-columns:1fr}
+  .profile-card{flex-direction:column;align-items:flex-start;gap:12px}
+  .profile-meta input{width:100%}
+}
+
+/* --- Accessibility focus styles --- */
+a:focus, button:focus, input:focus{outline:none;box-shadow:0 0 0 4px rgba(124,58,237,0.12)}
+
+/* --- Tiny helpers for icons (no external icon lib) --- */
+/* pill icons via pseudo element */
+.pill::before{content:"💊";margin-right:8px;display:inline-block}
+.medicine-item h3::after{content:"";display:inline-block;width:10px;height:10px;margin-left:10px;border-radius:50%;background:linear-gradient(45deg,var(--accent-1),var(--accent-3));box-shadow:0 6px 18px rgba(124,58,237,0.12)}
+/* -------------------------- */
+/* SUPER CLEAN, NEON LOGO     */
+/* -------------------------- */
+.logo-neon {
+  font-family: 'Poppins', sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 14px 26px;
+  border-radius: 18px;
+
+  /* gradient text */
+  background: linear-gradient(135deg, #00eaff, #0070ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* neon glow */
+  text-shadow:
+    0 0 8px rgba(0, 255, 255, 0.6),
+    0 0 16px rgba(0, 150, 255, 0.5),
+    0 0 24px rgba(0, 150, 255, 0.4);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: floatLogo 3s ease-in-out infinite;
+}
+
+/* soft floating animation */
+@keyframes floatLogo {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}

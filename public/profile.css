@@ -59,3 +59,48 @@ header nav a {
     margin-top: 0;
     color: #007bff;
 }
+.profile-field {
+    margin-bottom: 15px;
+    padding: 12px;
+    background: #f8fbff;
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.profile-field label {
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 16px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.profile-field p {
+    margin: 0;
+    font-size: 15px;
+    color: #444;
+}
+.profile-field {
+    margin-bottom: 15px;
+    padding: 12px;
+    background: #f8fbff;
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.profile-field label {
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 16px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.profile-field p {
+    margin: 0;
+    font-size: 15px;
+    color: #444;
+}
+

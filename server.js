@@ -15,6 +15,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+app.get('/uploads', (req, res) => {
+  res.sendFile(__dirname + '/uploads.html');
+});
+
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
     if (username === 'admin' && password === 'admin123') {

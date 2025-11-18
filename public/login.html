@@ -1,69 +1,34 @@
-<link rel="stylesheet" href="styles.css">
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mediscan Login</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f3f3f3;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .login-box {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            width: 320px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .login-box h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #4caf50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background: #45a049;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mediscan — Login</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
-
 <body>
-    <div class="login-box">
-        <h2>Mediscan Login</h2>
+  <div class="center-screen">
+    <div class="login-card" role="main">
+      <div class="login-brand">
+        <div class="logo-neon">MS</div>
+        <div>
+          <div class="login-title">Mediscan</div>
+          <div class="login-sub">Sign in to your healthcare dashboard</div>
+        </div>
+      </div>
 
-<form action="/login" method="POST">
-    <input type="text" name="username" placeholder="Enter Username" required>
-    <input type="password" name="password" placeholder="Enter Password" required>
-    <button type="submit">Login</button>
-</form>
+      <form action="/login" method="POST" style="margin-top:12px;">
+        <div class="form-field">
+          <input type="text" name="username" placeholder="Username" required autocomplete="username">
+        </div>
+        <div class="form-field">
+          <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+        </div>
+        <button class="btn" type="submit">Login</button>
+      </form>
+
+      <a class="small-link" href="#">Forgot password?</a>
     </div>
+  </div>
 </body>
 </html>
