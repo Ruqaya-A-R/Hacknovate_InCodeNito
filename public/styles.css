@@ -317,3 +317,78 @@ a:focus, button:focus, input:focus{outline:none;box-shadow:0 0 0 4px rgba(124,58
   50% { transform: translateY(-6px); }
   100% { transform: translateY(0); }
 }
+/* Background */
+body {
+    background: linear-gradient(135deg, #0b1b35, #102a54);
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    text-align: center;
+    padding-top: 60px;
+}
+
+/* Upload Card */
+.upload-container {
+    width: 420px;
+    margin: auto;
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: 0.3s ease;
+}
+
+.upload-container:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+/* Select Image Text */
+.upload-text {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Choose File Button */
+input[type="file"] {
+    padding: 14px;
+    border-radius: 12px;
+    background: #ffffff;
+    width: 80%;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+input[type="file"]:hover {
+    background: #e8e8e8;
+}
+
+/* Analyze Button */
+.analyze-btn {
+    padding: 14px 40px;
+    background: #00c6ff;
+    border: none;
+    border-radius: 12px;
+    color: #000;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4);
+}
+
+.analyze-btn:hover {
+    background: #00e5ff;
+    transform: scale(1.05);
+}
+
+/* Drag & Drop Effect */
+.upload-container.dragover {
+    border: 2px dashed #00e5ff;
+    background: rgba(255, 255, 255, 0.15);
+}
+
